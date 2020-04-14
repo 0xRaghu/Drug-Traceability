@@ -1,0 +1,121 @@
+#!/bin/bash
+echo 'Invokoing register company to register a Manufacturer.'
+
+peer chaincode invoke -o orderer.pharma-network.com:7050 -C pharmachannel -n pharmanet -c '{"Args":["org.pharma-network.pharmanet:registerCompany","MAN001","SunPharma","Chennai","manufacturer"]}'
+
+sleep 5
+
+echo 'Invokoing register company to register two transporters.'
+
+peer chaincode invoke -o orderer.pharma-network.com:7050 -C pharmachannel -n pharmanet -c '{"Args":["org.pharma-network.pharmanet:registerCompany","TRA001","FedEx","Delhi","transporter"]}'
+
+sleep 5
+
+peer chaincode invoke -o orderer.pharma-network.com:7050 -C pharmachannel -n pharmanet -c '{"Args":["org.pharma-network.pharmanet:registerCompany","TRA002","Blue Dart","Bangalore","transporter"]}'
+
+sleep 5
+
+echo 'Invokoing register company to register a distributor.'
+
+peer chaincode invoke -o orderer.pharma-network.com:7050 -C pharmachannel -n pharmanet -c '{"Args":["org.pharma-network.pharmanet:registerCompany","DIST001","VG Pharma","Vizag","distributor"]}'
+
+sleep 5
+
+echo 'Invokoing register company to register a retailer.'
+
+peer chaincode invoke -o orderer.pharma-network.com:7050 -C pharmachannel -n pharmanet -c '{"Args":["org.pharma-network.pharmanet:registerCompany","RET002","upgrad","Mumbai","retailer"]}'
+
+sleep 5
+
+echo 'Invoking add drug to register drugs on the ledger'
+
+peer chaincode invoke -o orderer.pharma-network.com:7050 -C pharmachannel -n pharmanet -c '{"Args":["org.pharma-network.pharmanet:addDrug","Paracetamol","001","01/01/2018","01/01/2020","MAN001"]}'
+
+sleep 5
+
+peer chaincode invoke -o orderer.pharma-network.com:7050 -C pharmachannel -n pharmanet -c '{"Args":["org.pharma-network.pharmanet:addDrug","Paracetamol","002","01/01/2018","01/01/2020","MAN001"]}'
+
+sleep 5
+
+peer chaincode invoke -o orderer.pharma-network.com:7050 -C pharmachannel -n pharmanet -c '{"Args":["org.pharma-network.pharmanet:addDrug","Paracetamol","003","01/01/2018","01/01/2020","MAN001"]}'
+
+sleep 5
+
+peer chaincode invoke -o orderer.pharma-network.com:7050 -C pharmachannel -n pharmanet -c '{"Args":["org.pharma-network.pharmanet:addDrug","Paracetamol","004","01/01/2018","01/01/2020","MAN001"]}'
+
+sleep 5
+
+echo 'Invoking createPO to generate a purchase order by distributor'
+
+peer chaincode invoke -o orderer.pharma-network.com:7050 -C pharmachannel -n pharmanet -c '{"Args":["org.pharma-network.pharmanet:createPO","DIST001","MAN001","Paracetamol","3"]}'
+
+sleep 5
+
+echo 'Invoking createShipment to create a shipment for the above order'
+
+peer chaincode invoke -o orderer.pharma-network.com:7050 -C pharmachannel -n pharmanet -c '{"Args":["org.pharma-network.pharmanet:createShipment","DIST001","Paracetamol","001-002-003","TRA001"]}'
+
+sleep 5
+
+echo 'Viewing the status of the drug'
+
+peer chaincode invoke -o orderer.pharma-network.com:7050 -C pharmachannel -n pharmanet -c '{"Args":["org.pharma-network.pharmanet:viewDrugCurrentState","Paracetamol","001"]}'
+
+sleep 5
+
+echo 'Invoking update shipment to update the status of the current shipment'
+
+peer chaincode invoke -o orderer.pharma-network.com:7050 -C pharmachannel -n pharmanet -c '{"Args":["org.pharma-network.pharmanet:updateShipment","DIST001","Paracetamol","TRA001"]}'
+
+sleep 5
+
+echo 'Viewing the status of the drug'
+
+peer chaincode invoke -o orderer.pharma-network.com:7050 -C pharmachannel -n pharmanet -c '{"Args":["org.pharma-network.pharmanet:viewDrugCurrentState","Paracetamol","001"]}'
+
+sleep 5
+
+echo 'Invoking createPO to generate a purchase order by retailer'
+
+peer chaincode invoke -o orderer.pharma-network.com:7050 -C pharmachannel -n pharmanet -c '{"Args":["org.pharma-network.pharmanet:createPO","RET002","DIST001","Paracetamol","2"]}'
+
+sleep 5
+
+echo 'Invoking createShipment to create a shipment for the above order'
+
+peer chaincode invoke -o orderer.pharma-network.com:7050 -C pharmachannel -n pharmanet -c '{"Args":["org.pharma-network.pharmanet:createShipment","RET002","Paracetamol","001-002","TRA002"]}'
+
+sleep 5
+
+echo 'Invoking update shipment to update the status of the current shipment'
+
+peer chaincode invoke -o orderer.pharma-network.com:7050 -C pharmachannel -n pharmanet -c '{"Args":["org.pharma-network.pharmanet:updateShipment","RET002","Paracetamol","TRA002"]}'
+
+sleep 5
+
+echo 'Viewing the status of the drug'
+
+peer chaincode invoke -o orderer.pharma-network.com:7050 -C pharmachannel -n pharmanet -c '{"Args":["org.pharma-network.pharmanet:viewDrugCurrentState","Paracetamol","001"]}'
+
+sleep 5
+
+echo 'Invoking retail drug to sell the drug to a consumer'
+
+peer chaincode invoke -o orderer.pharma-network.com:7050 -C pharmachannel -n pharmanet -c '{"Args":["org.pharma-network.pharmanet:retailDrug","Paracetamol","001","RET002","AAD001"]}'
+
+sleep 5
+
+
+echo 'Viewing the status of the drug'
+
+peer chaincode invoke -o orderer.pharma-network.com:7050 -C pharmachannel -n pharmanet -c '{"Args":["org.pharma-network.pharmanet:viewDrugCurrentState","Paracetamol","001"]}'
+
+sleep 5
+
+echo 'Viewing the history of the drug'
+
+peer chaincode invoke -o orderer.pharma-network.com:7050 -C pharmachannel -n pharmanet -c '{"Args":["org.pharma-network.pharmanet:viewHistory","Paracetamol","001"]}'
+
+sleep 5
+
+

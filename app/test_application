@@ -1,0 +1,34 @@
+## Registering new company
+
+node 2_registerNewCompany.js "MAN001" "SunPharma" "Chennai" "manufacturer" 
+node 2_registerNewCompany.js "TRA001" "FedEx" "Delhi" "transporter" 
+node 2_registerNewCompany.js "TRA002" "Blue Dart" "Bangalore" "transporter" 
+node 2_registerNewCompany.js "DIST001" "VG Pharma" "Vizag" "distributor" 
+node 2_registerNewCompany.js "RET002" "upgrad" "Mumbai" "retailer" 
+
+## Add new drug
+
+node 3_addDrug.js "Paracetamol" "001" "01/01/2018" "01/01/2020" "MAN001" "manufacturer"
+node 3_addDrug.js "Paracetamol" "002" "01/02/2018" "01/02/2020" "MAN001" "manufacturer"
+node 3_addDrug.js "Paracetamol" "003" "01/03/2018" "01/03/2020" "MAN001" "manufacturer"
+node 3_addDrug.js "Paracetamol" "004" "01/04/2018" "01/04/2020" "MAN001" "manufacturer"
+
+##CreatePO
+
+node 4_createPO.js "DIST001" "MAN001" "Paracetamol" "3" "distributor"
+
+#Create Shipment 
+
+node 5_createShipment.js "DIST001" "Paracetamol" "001-002-003" "TRA001" "manufacturer"
+
+##Update Shipment
+
+node 6_updateShipment.js "DIST001" "Paracetamol" "TRA001" "transporter"
+
+##View history
+
+node viewHistory.js "Paracetamol" "001" "consumer"
+
+##View Current State
+
+node viewCurrentState.js "Paracetamol" "001" "retailer"

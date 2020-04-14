@@ -1,0 +1,21 @@
+bin/cryptogen generate --config=./crypto-config.yaml
+
+bin/configtxgen -profile OrdererGenesis -channelID upgrad-sys-channel -outputBlock ./channel-artifacts/genesis.block
+
+bin/configtxgen -profile pharmachannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID pharmachannel
+
+bin/configtxgen -profile pharmachannel -outputAnchorPeersUpdate ./channel-artifacts/manufacturerMSPanchor.tx -channelID pharmachannel -asOrg manufacturerMSP
+
+bin/configtxgen -profile pharmachannel -outputAnchorPeersUpdate ./channel-artifacts/transporterMSPanchor.tx -channelID pharmachannel -asOrg transporterMSP
+
+bin/configtxgen -profile pharmachannel -outputAnchorPeersUpdate ./channel-artifacts/distributorMSPanchor.tx -channelID pharmachannel -asOrg distributorMSP
+
+bin/configtxgen -profile pharmachannel -outputAnchorPeersUpdate ./channel-artifacts/retailerMSPanchor.tx -channelID pharmachannel -asOrg retailerMSP
+
+bin/configtxgen -profile pharmachannel -outputAnchorPeersUpdate ./channel-artifacts/consumerMSPanchor.tx -channelID pharmachannel -asOrg consumerMSP
+
+docker-compose -f ./docker-compose.yml up -d
+
+docker-compose down -v --remove-orphans
+
+peer chaincode instantiate -o orderer.pharma-network.com:7050 -C pharmachannel -n pharmanet -l node -v 1.0 -c '{"Args":["org.pharma-network.pharmanet:instantiate"]}' -P "OR ('manufacturerMSP.member','transporterMSP.member','distributorMSP.member','retailerMSP.member','consumererMSP.member')"
